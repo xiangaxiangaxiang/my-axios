@@ -30,6 +30,7 @@ export function buildUrl(url: string, params?: any): string {
       return
     }
 
+    // 统一转成数组处理
     let values = []
     if (Array.isArray(val)) {
       values = val
@@ -50,6 +51,7 @@ export function buildUrl(url: string, params?: any): string {
   let serializedParams = parts.join('&')
 
   if (serializedParams) {
+    // 去掉哈希值
     const markIndex = url.indexOf('#')
     if (markIndex !== -1) {
       url = url.slice(0, markIndex)
