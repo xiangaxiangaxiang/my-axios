@@ -1,28 +1,28 @@
 import { AxiosRequestConfig, AxiosResponse } from '../types'
 
 class AxiosError extends Error {
-  isAxiosError: boolean
+    isAxiosError: boolean
 
-  constructor(
-    public message: string,
-    public config: AxiosRequestConfig,
-    public code?: string | null,
-    public request?: any,
-    public response?: AxiosResponse
-  ) {
-    super(message)
-    this.isAxiosError = true
+    constructor(
+        public message: string,
+        public config: AxiosRequestConfig,
+        public code?: string | null,
+        public request?: any,
+        public response?: AxiosResponse
+    ) {
+        super(message)
+        this.isAxiosError = true
 
-    Object.setPrototypeOf(this, AxiosError.prototype)
-  }
+        Object.setPrototypeOf(this, AxiosError.prototype)
+    }
 }
 
 export function createError(
-  message: string,
-  config: AxiosRequestConfig,
-  code?: string | null,
-  request?: any,
-  response?: AxiosResponse
+    message: string,
+    config: AxiosRequestConfig,
+    code?: string | null,
+    request?: any,
+    response?: AxiosResponse
 ) {
-  return new AxiosError(message, config, code, request, response)
+    return new AxiosError(message, config, code, request, response)
 }

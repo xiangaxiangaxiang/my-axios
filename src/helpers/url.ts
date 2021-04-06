@@ -1,14 +1,14 @@
 import { isDate, isPlainObject } from './util'
 
 function encode(val: string): string {
-  return encodeURIComponent(val)
-    .replace(/%40/g, '@')
-    .replace(/%3A/gi, ':')
-    .replace(/%24/g, '$')
-    .replace(/%2C/gi, ',')
-    .replace(/%20/g, '+')
-    .replace(/%5B/gi, '[')
-    .replace(/%5D/gi, ']')
+    return encodeURIComponent(val)
+        .replace(/%40/g, '@')
+        .replace(/%3A/gi, ':')
+        .replace(/%24/g, '$')
+        .replace(/%2C/gi, ',')
+        .replace(/%20/g, '+')
+        .replace(/%5B/gi, '[')
+        .replace(/%5D/gi, ']')
 }
 
 /**
@@ -18,45 +18,45 @@ function encode(val: string): string {
  * @return {*}
  */
 export function buildUrl(url: string, params?: any): string {
-  if (!params) {
-    return url
-  }
-
-  const parts: string[] = []
-
-  Object.keys(params).forEach(key => {
-    const val = params[key]
-    if (val === null || typeof val === 'undefined') {
-      return
+    if (!params) {
+        return url
     }
 
-    // 统一转成数组处理
-    let values = []
-    if (Array.isArray(val)) {
-      values = val
-      key += '[]'
-    } else {
-      values = [val]
-    }
+    const parts: string[] = []
 
-    values.forEach(val => {
-      if (isDate(val)) {
-        val = val.toISOString()
-      } else if (isPlainObject(val)) {
-        val = JSON.stringify(val)
-      }
-      parts.push(`${encode(key)}=${encode(val)}`)
+    Object.keys(params).forEach(key => {
+        const val = params[key]
+        if (val === null || typeof val === 'undefined') {
+            return
+        }
+
+        // 统一转成数组处理
+        let values = []
+        if (Array.isArray(val)) {
+            values = val
+            key += '[]'
+        } else {
+            values = [val]
+        }
+
+        values.forEach(val => {
+            if (isDate(val)) {
+                val = val.toISOString()
+            } else if (isPlainObject(val)) {
+                val = JSON.stringify(val)
+            }
+            parts.push(`${encode(key)}=${encode(val)}`)
+        })
     })
-  })
-  let serializedParams = parts.join('&')
+    let serializedParams = parts.join('&')
 
-  if (serializedParams) {
-    // 去掉哈希值
-    const markIndex = url.indexOf('#')
-    if (markIndex !== -1) {
-      url = url.slice(0, markIndex)
+    if (serializedParams) {
+        // 去掉哈希值
+        const markIndex = url.indexOf('#')
+        if (markIndex !== -1) {
+            url = url.slice(0, markIndex)
+        }
+        url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
     }
-    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
-  }
-  return url
+    return url
 }
