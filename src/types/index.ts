@@ -50,7 +50,7 @@ export interface AxiosResponse<T = any> {
 export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
 
 export interface AxiosError extends Error {
-    config?: AxiosRequestConfig
+    config: AxiosRequestConfig
     isAxiosError: boolean
     code?: string | null
     request?: any

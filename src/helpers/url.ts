@@ -12,7 +12,7 @@ function encode(val: string): string {
 }
 
 export function isAbsoluteURL(url: string): boolean {
-    return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+    return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
 }
 
 export function combineURL(baseURL: string, relativeURL?: string): string {
@@ -80,4 +80,30 @@ export function buildUrl(
         url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
     }
     return url
+}
+
+/* 判断目标路径和本网站路径是否相等 */
+interface URLOrigin {
+    protocol: string
+    host: string
+}
+const urlParsingNode = document.createElement('a')
+const currentOrigin = resolveURL(window.location.href)
+
+function resolveURL(url: string): URLOrigin {
+    urlParsingNode.setAttribute('href', url)
+    const { protocol, host } = urlParsingNode
+
+    return {
+        protocol,
+        host
+    }
+}
+
+export function isURLSameOrigin(requestURL: string): boolean {
+    const parsedOrigin = resolveURL(requestURL)
+
+    return (
+        parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host
+    )
 }

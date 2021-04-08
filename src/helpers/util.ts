@@ -1,10 +1,5 @@
 const toString = Object.prototype.toString
 
-interface URLOrigin {
-    protocol: string
-    host: string
-}
-
 export function isDate(val: any): val is Date {
     return toString.call(val) === '[object Date]'
 }
@@ -53,26 +48,4 @@ export function deepMerge(...objs: any[]) {
     })
 
     return result
-}
-
-/* 判断目标路径和本网站路径是否相等 */
-const urlParsingNode = document.createElement('a')
-const currentOrigin = resolveURL(window.location.href)
-
-function resolveURL(url: string): URLOrigin {
-    urlParsingNode.setAttribute('href', url)
-    const { protocol, host } = urlParsingNode
-
-    return {
-        protocol,
-        host
-    }
-}
-
-export function isURLSameOrigin(requestURL: string): boolean {
-    const parsedOrigin = resolveURL(requestURL)
-
-    return (
-        parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host
-    )
 }

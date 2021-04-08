@@ -1,7 +1,8 @@
 import cookie from '../helpers/cookie'
 import { createError } from '../helpers/error'
 import { parseHeaders } from '../helpers/headers'
-import { isFormData, isURLSameOrigin } from '../helpers/util'
+import { isURLSameOrigin } from '../helpers/url'
+import { isFormData } from '../helpers/util'
 import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from '../types'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
@@ -89,7 +90,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
             /* 异常处理 */
             request.onerror = function handleError() {
-                reject(createError('Netword Error', config, null, request))
+                reject(createError('Network Error', config, null, request))
             }
 
             /* 上传下载进度 */
