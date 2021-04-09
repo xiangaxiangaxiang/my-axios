@@ -127,7 +127,7 @@ export interface AxiosTransformer {
 
 export interface CancelToken {
     promise: Promise<Cancel>
-    string?: Cancel
+    reason?: Cancel
 
     throwIfRequested(): void
 }
